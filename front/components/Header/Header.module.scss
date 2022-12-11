@@ -1,0 +1,32 @@
+.header {
+  width: 100%;
+  padding: 15px 20px;
+  background-color: lightgray;
+  display: flex;
+  flex-direction: row;
+  .imageWrapper {
+    max-width: 300px;
+    margin-right: 20px;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+    img {
+      max-width: 300px;
+      height: 300px;
+    }
+  }
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    h4 {
+      font-size: 16px;
+    }
+    h1 {
+      font-size: 48px;
+      margin: 0 !important;
+    }
+    h5 {
+      font-size: 14px;
+    }
+  }
+}

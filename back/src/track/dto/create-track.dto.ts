@@ -4,6 +4,6 @@ export class CreateTrackDto {
     readonly name;
     readonly artist;
     readonly text;
-
+    @IsOptional()
     readonly albumId;
 }

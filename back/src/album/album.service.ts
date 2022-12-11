@@ -12,6 +12,7 @@ export class AlbumService {
     constructor(@InjectModel(Album.name) private albumModel: Model<AlbumDocument>, @InjectModel(Track.name) private trackModel: Model<TrackDocument>, @InjectModel(Comment.name) private commentModel: Model<CommentDocument>, private fileService: FileService, ){}
 
     async create(dto: CreateAlbumDto): Promise<Album> {
+        console.log(dto)
         const album = await this.albumModel.create({...dto, tracks: []})
         return album
     }
@@ -20,7 +21,7 @@ export class AlbumService {
     }
 
     async getOne(id: ObjectId): Promise<Album>{
-        return this.albumModel.findById(id)
+        return this.albumModel.findById(id).populate('tracks')
     }
 
     async pushTrack(trackId: ObjectId, albumId: ObjectId) {
@@ -41,5 +42,9 @@ export class AlbumService {
         track.album = null
         await track.save()
         return trackId
+    }
+
+    delete(id: ObjectId) {
+        return this.albumModel.findByIdAndDelete(id)
     }
 }

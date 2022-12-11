@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  max-width: 1000px;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.1);
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+    h1 {
+      font-size: 24px;
+    }
+  }
+  .wrapper {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}

@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+    background-color: rgb(23 23 23);
+}
+
+.link {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.track-page {
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9139005944174545) 67%, rgba(172,55,55,1) 100%);
+}
+
+.comment-section {
+    background: rgb(0,0,0);
+    background: linear-gradient(169deg, rgba(0,0,0,1) 37%, rgba(167,7,7,1) 69%, rgba(0,0,0,1) 100%);
+}

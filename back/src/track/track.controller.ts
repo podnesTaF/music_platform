@@ -19,9 +19,9 @@ export class TrackController {
     }
 
     @Get()
-    getAll(@Query('count') count: number,
-           @Query('offset') offset: number,){
-        return this.trackService.getAll(count, offset);
+    getAll(
+        @Query('offset') offset: number,){
+        return this.trackService.getAll(offset);
     }
 
     @Get('/search')
@@ -36,7 +36,7 @@ export class TrackController {
 
     @Delete(':id')
     delete(@Param('id') id: ObjectId){
-        return this.trackService.delete(id)
+        return this.trackService.delete(id);
     }
 
     @Post('/comment')

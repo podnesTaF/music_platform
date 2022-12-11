@@ -32,8 +32,8 @@ export class TrackService {
 
     }
 
-    async getAll(count = 10, offset = 0): Promise<Track[]>{
-        const tracks = await this.trackModel.find().skip(Number(offset)).limit(Number(count))
+    async getAll(offset = 0, count = 3){
+        const tracks = await this.trackModel.find().limit(+count + +offset)
         return tracks;
     }
 
@@ -43,7 +43,13 @@ export class TrackService {
     }
 
     async delete(id: ObjectId): Promise<ObjectId>{
-        const track = await this.trackModel.findByIdAndDelete(id);
+        const track = await this.trackModel.findById(id)
+        const album = await this.albumModel.findById(track.album)
+        if(album) {
+            album.tracks = album.tracks.filter(track => track.toString() !== id.toString())
+            await album.save()
+        }
+        await this.trackModel.findByIdAndDelete(id);
         return track.id
     }
 
