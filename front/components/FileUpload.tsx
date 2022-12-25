@@ -14,8 +14,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ setFile, accept, children}) => 
     }
 
     return (
-        <div onClick={() => ref.current.click()}>
-            <input type="file" accept={accept}  style={{display: 'none'}} ref={ref} onChange={onChange}/>
+        <div className='max-h-80 h-80 bg-gray-300/20' onClick={() => ref.current.click()}>
+            <input type="file" accept={accept} className='hidden' ref={ref} onChange={onChange}/>
             {children}
         </div>
     );

@@ -1,10 +1,10 @@
 import {Dispatch} from "react";
 import {TrackActions, TrackActionType} from "../../types/track";
 import axios from "axios";
-export const fetchTracks = (offset) => {
+export const fetchTracks = (offset?) => {
     return async (dispatch: Dispatch<TrackActions>) => {
         try {
-            const response = await axios.get('http://localhost:5000/tracks?count=3' + '&offset=' + offset)
+            const response = await axios.get('http://localhost:5000/tracks?count=3' + '&offset=' + (offset || 0))
             dispatch({type: TrackActionType.FETCH_TRACKS, payload: response.data})
         } catch (err) {
             dispatch({

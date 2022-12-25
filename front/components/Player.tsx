@@ -1,27 +1,47 @@
 import React, {useEffect} from 'react';
+import axios from "axios";
+
 import {Pause, PlayArrow, VolumeUp} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
-import styles from '../styles/Player.module.css'
+
+
 import TrackProgress from "./TrackProgress";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {useActions} from "../hooks/useActions";
 
+import styles from '../styles/Player.module.css'
 
 let audio;
 const Player = () => {
     const {pause, volume, active, duration, currentTime} = useTypedSelector(state => state.player)
     const {pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setActiveTrack} = useActions()
 
+    // useEffect(() => {
+    //     audio = new Audio()
+    //     if(audio && !pause) {
+    //         setAudio()
+    //         // play()
+    //     }
+    // }, [])
+
     useEffect(() => {
+        if(active) {
+            (async() => {
+                await axios.post(`http://localhost:5000/tracks/listen/${active?._id}`)
+            })()
+        }
         if(!audio) {
             audio = new Audio()
-        } else {
+        } else if(audio && !pause) {
             setAudio()
             play()
+        } else {
+            setAudio()
         }
     }, [active])
 
     useEffect(() => {
+        console.log('third')
         if(!pause) {
             audio.play()
         } else {

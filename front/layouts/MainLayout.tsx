@@ -1,10 +1,8 @@
 import React, {useEffect } from 'react';
 import Navbar from "../components/navbar";
-import {Container} from "@mui/system";
 import Player from "../components/Player";
 import Head from "next/head";
 import {useTypedSelector} from "../hooks/useTypedSelector";
-import { useActions } from '../hooks/useActions';
 
 interface MainLayoutProps {
     children?: React.ReactNode;
@@ -12,6 +10,7 @@ interface MainLayoutProps {
     description?: string;
 }
 const MainLayout: React.FC<MainLayoutProps> = ({children, title, description}) => {
+    const {active} = useTypedSelector(state => state.player)
     return (
         <>
             <Head>
@@ -22,7 +21,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({children, title, description}) =
             </Head>
             <div>
                 <Navbar/>
-                <div style={{marginLeft: '240px'}}>
+                <div style={{marginLeft: '240px', marginBottom: active ? '80px' : 0}}>
                     {children}
                 </div>
                 <Player />

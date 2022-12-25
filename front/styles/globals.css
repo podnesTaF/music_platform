@@ -29,3 +29,7 @@ body {
     background: rgb(0,0,0);
     background: linear-gradient(169deg, rgba(0,0,0,1) 37%, rgba(167,7,7,1) 69%, rgba(0,0,0,1) 100%);
 }
+
+.gradient {
+    background: linear-gradient(143deg, rgba(0,0,0,1) 30%, rgba(54,139,255,1) 100%);
+}

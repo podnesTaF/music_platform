@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import mongoose from "mongoose";
 import {Track} from "../../track/schemas/track.schema";
+import {IsOptional} from "class-validator";
 
 export type AlbumDocument = HydratedDocument<Album>;
 
@@ -18,9 +19,10 @@ export class Album {
     author: string;
 
     @Prop()
+    @IsOptional()
     picture: string;
 
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Track'}]})
+    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Track'}], nullable: true})
     tracks: Track[];
 
 }

@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React,  {useState} from 'react';
 import {ITrack, TrackActionType} from "../types/track";
-import styles from '../styles/TrackItem.module.css'
 import IconButton from "@mui/material/IconButton";
 import {Delete, Pause, PlayArrow} from "@mui/icons-material";
 import {useRouter} from "next/router";
@@ -8,8 +7,6 @@ import {useActions} from "../hooks/useActions";
 import {useDispatch} from "react-redux";
 import {NextThunkDispatch} from "../store";
 import axios from "axios";
-// import {timeTransform} from "../utils/track";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {useTypedSelector} from "../hooks/useTypedSelector";
 
 interface TrackItem {
@@ -18,12 +15,15 @@ interface TrackItem {
     isAlbumSearch?: boolean;
 
     type?: 'forAlbum';
+
+    disabled?: boolean;
     onAddTrack?: Function;
     onRemoveTrack?: Function;
 }
 
 let duration: number;
-const TrackItem: React.FC<TrackItem> = ({track, isAlbumSearch, onAddTrack, type, onRemoveTrack}) => {
+const TrackItem: React.FC<TrackItem> = ({track, isAlbumSearch, onAddTrack, type, onRemoveTrack, disabled}) => {
+    const [disable, setDisable] = useState(disabled)
     const router = useRouter()
     const {pause, active} = useTypedSelector(state => state.player)
     const {playTrack, pauseTrack, setActiveTrack} = useActions()
@@ -60,6 +60,32 @@ const TrackItem: React.FC<TrackItem> = ({track, isAlbumSearch, onAddTrack, type,
         }
     }
 
+    if(disabled) {
+        return (
+                <div className='m-4 p-2 flex align-center flex-row bg-neutral-800 rounded hover:bg-neutral-700 relative'>
+                    <IconButton >
+                        <PlayArrow />
+                    </IconButton>
+                    <img className='w-20 h-20 object-cover ' src={`http://localhost:5000/${track.picture}`}/>
+                    <div className='my-auto ml-4'>
+                        <div>
+                            {track.name}
+                        </div>
+                        <div style={{fontSize: 12, color: 'gray'}}>
+                            {track.artist}
+                        </div>
+                    </div>
+                    <div className='flex flex-row ml-auto align-center'>
+                        <p className='text-gray-300 mx-4 self-center'>3:22</p>
+                        {isAlbumSearch && <button className='btn'>Add to album</button>}
+                    </div>
+                    <div className="flex rounded justify-center bg-black/50 items-center absolute top-0 left-0 h-full w-full">
+                        <h1 className='text-3xl'>Track already exist in album</h1>
+                    </div>
+                </div>
+        )
+    }
+
     return (
         <div className='m-4 p-2 flex align-center flex-row bg-neutral-800 rounded hover:bg-neutral-700' onClick={() => router.push('/tracks/' + track._id)} >
             <IconButton onClick={play} >
@@ -78,7 +104,7 @@ const TrackItem: React.FC<TrackItem> = ({track, isAlbumSearch, onAddTrack, type,
                 </div>
             </div>
             <div className='flex flex-row ml-auto align-center'>
-                        <p className='text-gray-300 mx-4 self-center'>3:22</p>
+                <p className='text-gray-300 mx-4 self-center'>3:22</p>
                 {!isAlbumSearch && <IconButton onClick={deleteTrackHandler} className=''>
                     <Delete/>
                 </IconButton>

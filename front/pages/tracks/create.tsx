@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import MainLayout from "../../layouts/MainLayout";
-import {Button, Card, Grid, TextField} from "@mui/material";
+import {Button, Grid, TextField} from "@mui/material";
 import StepWrapper from "../../components/StepWrapper";
 import FileUpload from '../../components/FileUpload';
 import {useInput} from "../../hooks/useInput";
@@ -18,9 +18,30 @@ const CreateTrack = () => {
     const [picture, setPicture] = useState(null)
     const [audio, setAudio] = useState(null)
     const [album, setAlbum] = useState(null)
+    const [previewUrl, setPreviewUrl] = useState(null)
+    const [audioPreview, setAudioPreview] = useState(null)
     const name = useInput('')
     const artist = useInput('')
     const text = useInput('')
+
+    useEffect(() => {
+        if (!picture) return
+        const fileReader = new FileReader()
+        fileReader.onload = () => {
+            setPreviewUrl(fileReader.result)
+        }
+        fileReader.readAsDataURL(picture)
+
+    }, [picture]);
+
+    useEffect(() => {
+        if (!audio) return
+        const fileReader = new FileReader()
+        fileReader.onload = () => {
+            setAudioPreview(fileReader.result)
+        }
+        fileReader.readAsDataURL(audio)
+    }, [audio]);
     const next = () => {
         if (activeStep !== 3) {
             setActiveStep(prev => prev + 1)
@@ -42,9 +63,9 @@ const CreateTrack = () => {
 
     return (
         <MainLayout>
-            <StepWrapper activeStep={activeStep}>
+            <StepWrapper  type= 'track' activeStep={activeStep}>
                 {activeStep === 0 &&
-                    <Grid container direction={'column'} style={{padding: 20}}>
+                    <Grid container direction={'column'} className='p-5 bg-white/50 rounded'>
                         <TextField
                             {...name}
                             style={{marginTop: 10}}
@@ -65,18 +86,24 @@ const CreateTrack = () => {
                     </Grid>
                 }
                 {activeStep === 1 && <FileUpload setFile={setPicture} accept={'image/*'}>
-                    <Button>Upload cover image</Button>
+                    <Button className='text-white'>Upload cover image</Button>
+                    {previewUrl && <img className='h-60 w-60 object-cover m-auto' src={previewUrl} alt='Preview'/>}
                 </FileUpload>}
                 {activeStep === 2 &&
                     <FileUpload setFile={setAudio} accept={'audio/*'}>
-                        <Button>Upload your track</Button>
+                        <Button className='text-white'>Upload your track</Button>
+                            {previewUrl && <img className='h-48 w-48 object-cover m-auto' src={previewUrl} alt='Preview'/>}
+                            {audioPreview && <audio className='mx-auto my-4' controls>
+                                <source src={audioPreview} type="audio/*" />
+                                Your browser does not support the audio element.
+                            </audio>}
                     </FileUpload>
                 }
                 {activeStep === 3 && <AddToAlbum setAlbum={setAlbum} albums={albums} />}
             </StepWrapper>
-            <Grid container justifyContent='space-between'>
-                <Button disabled={activeStep === 0} onClick={previous}>Previous</Button>
-                <Button onClick={next}>{activeStep === 3 ? 'Upload the track' : 'Next'}</Button>
+            <Grid container justifyContent='space-between' className='max-w-3xl mx-auto'>
+                <Button className='text-white disabled:text-gray-500' disabled={activeStep === 0} onClick={previous}>Previous</Button>
+                <Button className='text-white' onClick={next}>{activeStep === 3 ? 'Upload the track' : 'Next'}</Button>
             </Grid>
         </MainLayout>
     );

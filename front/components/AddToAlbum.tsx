@@ -9,29 +9,29 @@ import {IAlbum} from "../types/album";
 
 
 interface AddToAlbumProps {
-    albums: IAlbum[]
-    setAlbum: Function;
+    albums?: IAlbum[];
+    setAlbum?: Function;
+
 }
 export const AddToAlbum: React.FC<AddToAlbumProps> = ({albums, setAlbum}) => {
     const [selected, setSelected] = useState(null)
-    console.log(albums)
     const handleChange = (event: SelectChangeEvent) => {
         setSelected(event.target.value as string);
-        setAlbum(selected)
+            setAlbum(selected)
     };
 
     return (
         <Box sx={{ width: '100%' }}>
             <FormControl fullWidth>
-                <InputLabel id="select">Choose Album</InputLabel>
+                {albums && <InputLabel id="select">Choose Album</InputLabel>}
                 <Select
                     labelId="demo-simple-select-label"
                     id="select"
                     value={selected}
-                    label="Age"
+                    label="yop"
                     onChange={handleChange}
                 >
-                    {albums.map(album => (
+                    {albums && albums.map(album => (
                       <MenuItem key={album._id} value={album._id}>{album.name}</MenuItem>
                         ))}
                 </Select>

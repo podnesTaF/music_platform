@@ -12,31 +12,6 @@
   .play {
     display: none;
   }
-  .preview {
-    border-radius: 5px;
-    img {
-      object-position: center;
-      max-width: 200px;
-      height: auto;
-    }
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    width: 100%;
-    h3 {
-      margin: 0 0 10px 0;
-      text-decoration: none;
-      color: #111111;
-    }
-    p {
-      font-size: 14px;
-      color: #010101;
-      margin: 0;
-
-    }
-  }
   &:hover {
     position: relative;
     .play {

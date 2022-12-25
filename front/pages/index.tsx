@@ -1,29 +1,15 @@
 import React from 'react';
-import {Button} from "@mui/material";
-import Navbar from "../components/navbar";
 import MainLayout from "../layouts/MainLayout";
 
 const Index = () => {
     return (
-       <>
            <MainLayout>
-               <div className='center'>
-                   <h1>Welcome</h1>
-                   <h3>Here you will find the best tracks in the world</h3>
+               <div className='pt-40 flex justify-center flex-col items-center'>
+                   <h1 className='text-4xl mb-3'>Welcome</h1>
+                   <h3 className='text-xl mb-3'>Here you will find different tracks</h3>
+                   <h4>Upload and listen to your tracks</h4>
                </div>
            </MainLayout>
-
-           <style jsx>
-               {`
-               .center {
-                  margin-top: 150px;
-                  display: flex;
-                  justify-content: center;
-                  flex-direction: column;
-                  align-items: center;
-               }`}
-           </style>
-       </>
     );
 };
 

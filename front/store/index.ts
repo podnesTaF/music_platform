@@ -1,7 +1,7 @@
 import {Context, createWrapper, MakeStore} from "next-redux-wrapper";
 import {AnyAction, applyMiddleware, createStore} from "redux";
 import {reducer, RootState} from "./reducers";
-import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import thunk, {ThunkDispatch} from "redux-thunk";
 
 // @ts-ignore
 const makeStore: MakeStore<RootState>

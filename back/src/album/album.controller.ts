@@ -1,7 +1,8 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, UploadedFiles, UseInterceptors} from "@nestjs/common";
 import {AlbumService} from "./album.service";
 import {CreateAlbumDto} from "./dto/create-album.dto";
 import {ObjectId} from "mongoose";
+import {FileFieldsInterceptor} from "@nestjs/platform-express";
 
 
 @Controller('albums')
@@ -9,8 +10,12 @@ export class AlbumController {
     constructor(private readonly albumService: AlbumService) {}
 
     @Post()
-    create(@Body() dto: CreateAlbumDto) {
-        return this.albumService.create(dto);
+    @UseInterceptors(FileFieldsInterceptor([
+        {name: 'picture', maxCount: 1},
+    ]))
+    create(@UploadedFiles() files, @Body() dto: CreateAlbumDto) {
+        const {picture} = files;
+        return this.albumService.create(picture[0], dto);
     }
 
     @Post(':id')

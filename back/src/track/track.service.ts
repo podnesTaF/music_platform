@@ -7,13 +7,12 @@ import {CreateTrackDto} from "./dto/create-track.dto";
 import {CreateCommentDto} from "./dto/create-comment.dto";
 import {FileService, FileType} from "../file/file.service";
 import {Album, AlbumDocument} from "../album/schemas/album.shema";
-import {AlbumService} from "../album/album.service";
 
 @Injectable()
 export class TrackService {
     constructor(@InjectModel(Track.name) private trackModel: Model<TrackDocument>,
                 @InjectModel(Comment.name) private commentModel: Model<CommentDocument>, private fileService: FileService,
-                @InjectModel(Album.name) private albumModel: Model<AlbumDocument>, private albumService: AlbumService) {}
+                @InjectModel(Album.name) private albumModel: Model<AlbumDocument>) {}
     async create(dto: CreateTrackDto, picture, audio): Promise<Track>{
 
         const audioPath = this.fileService.createFile(FileType.AUDIO, audio)

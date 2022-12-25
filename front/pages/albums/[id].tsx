@@ -1,17 +1,17 @@
-import MainLayout from "../../layouts/MainLayout";
-import Header from "../../components/Header/Header";
+import React, {useState} from "react";
 import {GetServerSideProps} from "next";
 import axios from "axios";
+
+import MainLayout from "../../layouts/MainLayout";
+
 import TrackList from "../../components/TrackList";
+import TrackItem from "../../components/TrackItem";import Header from "../../components/Header/Header";
+
 import {TextField} from "@mui/material";
-import React, {useEffect, useState} from "react";
+
 import {useTypedSelector} from "../../hooks/useTypedSelector";
-import {useDispatch} from "react-redux";
-import {NextThunkDispatch} from "../../store";
-import {fetchTracks, searchTracks} from "../../store/action-creators/track";
 import {useSearch} from "../../hooks/useSearch";
-import TrackItem from "../../components/TrackItem";
-import {AlbumActionType, IAlbum} from "../../types/album";
+import {IAlbum} from "../../types/album";
 
 const AlbumPage = ({ServerAlbum}) => {
     const {tracks, error} = useTypedSelector(state => state.track)
@@ -39,14 +39,26 @@ const AlbumPage = ({ServerAlbum}) => {
         <MainLayout title={'Music Platform - ' + album.name + ' - ' + album.author} description={'Music platform, track: ' + album.name + ' by ' + album.author}>
             <Header data={album} type='album' />
             <TrackList onRemoveTrack={onRemoveTrack} type='forAlbum' tracks={album.tracks} />
-            <TextField
-                fullWidth
-                value={query}
-                onChange={search}
-            />
-            {query.length > 0 && tracks.map(track => (
-                <TrackItem onAddTrack={onAddTrack} key={track._id} track={track} isAlbumSearch={true} />
-            ))}
+            <div className='mx-12 mb-3 gradient'>
+                <h2 className='text-3xl mb-2'>You can add tracks to your album</h2>
+                <TextField
+                    fullWidth
+                    className='bg-neutral-700 rounded w-2/5'
+                    value={query}
+                    onChange={search}
+                />
+            {query.length > 0 && tracks.map(track => {
+                if (!track.album) {
+                    return (
+                        <TrackItem onAddTrack={onAddTrack} key={track._id} track={track} isAlbumSearch={true}/>
+                    )
+                } else {
+                    return (
+                        <TrackItem disabled={true} onAddTrack={onAddTrack} key={track._id} track={track} isAlbumSearch={true}/>
+                    )
+                }
+            })}
+            </div>
         </MainLayout>
     );
 };

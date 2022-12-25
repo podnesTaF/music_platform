@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './AlbumList.module.scss'
 import AlbumItem from "../AlbumItem/AlbumItem";
-import Link from "next/link";
 import { useRouter } from 'next/router';
 const AlbumList = ({albums}) => {
     const router = useRouter()

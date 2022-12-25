@@ -1,27 +1,41 @@
-import React, {useState} from 'react';
-import { IAlbum } from '../../types/album';
-import { ITrack } from '../../types/track';
+import React from 'react';
 import styles from './Header.module.scss'
+import Link from "next/link";
 interface HeaderProps {
-    data: IAlbum;
+    data: any;
     type: 'album' | 'track'
 }
 const Header: React.FC<HeaderProps> = ({data, type}) => {
-    const [image, setImage] = useState(data.picture || null);
-    const [name, setName] = useState(data.name || null);
-    const [artist, setArtist] = useState(data.author || null);
-    const [description, setDescription] = useState(data.description || null);
 
     if (type === 'album') {
         return (
             <header className={styles.header}>
                 <div className={styles.imageWrapper}>
-                    {!description ? <img src='https://static-cse.canva.com/blob/978204/1600w-fxYFTKLArdY.jpg' alt="Album cover" /> : <img src={`http://localhost:5000/${image}`} alt="Album cover" />}
+                    {!data.picture ? <img src='https://static-cse.canva.com/blob/978204/1600w-fxYFTKLArdY.jpg' alt="Album cover" /> : <img src={`http://localhost:5000/${data.picture}`} alt="Album cover" />}
                 </div>
                 <div className={styles.contentWrapper}>
                     <h4>Album</h4>
-                    {!name && <input />}
-                    <h5> {data.author} * 2022 * 18 tracks</h5>
+                    <h4>{data.name}</h4>
+                    <h5> {data.author} * 2022 * {data.tracks.length} tracks</h5>
+                </div>
+            </header>
+        );
+    } else {
+        return (
+            <header className={styles.header}>
+                <div className={styles.imageWrapper}>
+                    {!data.picture ? <img src='https://static-cse.canva.com/blob/978204/1600w-fxYFTKLArdY.jpg' alt="Album cover" /> : <img src={`http://localhost:5000/${data.picture}`} alt="Album cover" />}
+                </div>
+                <div className={styles.contentWrapper}>
+                    <h4>Track</h4>
+                    {data.name}
+                    <h5> {data.artist} </h5>
+                    <h5>{data.listens} listens</h5>
+                </div>
+                <div className='absolute top-4 right-4'>
+                    <Link className='bg-inherit px-5 py-3 rounded border-2 border-gray-300/25 hover:opacity-40' href='/tracks'>
+                        To the list
+                    </Link>
                 </div>
             </header>
         );

@@ -1,14 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import MainLayout from "../../layouts/MainLayout";
-import {Button, Card, Grid, TextField} from "@mui/material";
-import Box from "@mui/material/Box";
-import Link from "next/link";
 import TrackList from "../../components/TrackList";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
-import {fetchTracks, searchTracks} from "../../store/action-creators/track";
+import {fetchTracks} from "../../store/action-creators/track";
 import {useDispatch} from "react-redux";
-import {createPages} from "../../utils/page"
 import {useSearch} from "../../hooks/useSearch";
 
 

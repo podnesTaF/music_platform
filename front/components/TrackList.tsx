@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { ITrack } from '../types/track';
-import {Grid, Box} from "@mui/material";
 import TrackItem from "./TrackItem";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 interface TrackListProps {

@@ -1,13 +1,7 @@
 import React from 'react';
-import Navbar from "../../components/navbar";
 import MainLayout from "../../layouts/MainLayout";
-import {Button, Card, Grid, TextField} from "@mui/material";
-import Box from "@mui/material/Box";
-import Link from "next/link";
-import TrackList from "../../components/TrackList";
 import {useTypedSelector} from "../../hooks/useTypedSelector";
 import {NextThunkDispatch, wrapper} from "../../store";
-import {fetchTracks} from "../../store/action-creators/track";
 import {fetchAlbums} from "../../store/action-creators/album";
 import AlbumList from "../../components/AlbumList/AlbumList";
 
